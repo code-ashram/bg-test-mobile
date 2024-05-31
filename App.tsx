@@ -1,5 +1,5 @@
 import { FC, useState } from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import { Pressable, StyleSheet, Text, View } from 'react-native'
 import { StatusBar } from 'expo-status-bar'
 import { Button, Divider, ProgressBar, RadioButton } from 'react-native-paper'
 
@@ -32,33 +32,31 @@ const App: FC = () => {
       <View style={styles.optionsList}>
         <Text style={styles.task}>Choose the correct answer:</Text>
 
-        <View style={styles.option}>
+        <Pressable style={styles.option} onPress={() => setChecked('first')}>
           <RadioButton
             color={primary}
             value="first"
             status={checked === 'first' ? 'checked' : 'unchecked'}
-            onPress={() => setChecked('first')}
+            // onPress={() => setChecked('first')}
           />
           <Text style={styles.optionText}>Option 1</Text>
-        </View>
-        <View style={styles.option}>
+        </Pressable>
+        <Pressable style={styles.option} onPress={() => setChecked('second')}>
           <RadioButton
             color={primary}
             value="second"
             status={checked === 'second' ? 'checked' : 'unchecked'}
-            onPress={() => setChecked('second')}
           />
           <Text style={styles.optionText}>Option 2</Text>
-        </View>
-        <View style={styles.option}>
+        </Pressable>
+        <Pressable style={styles.option} onPress={() => setChecked('third')}>
           <RadioButton
             color={primary}
             value="third"
             status={checked === 'third' ? 'checked' : 'unchecked'}
-            onPress={() => setChecked('third')}
           />
           <Text style={styles.optionText}>Option 3</Text>
-        </View>
+        </Pressable>
       </View>
 
       <Button style={styles.button} mode="contained" buttonColor={primary} onPress={() => console.log('Pressed')}>
@@ -73,7 +71,7 @@ const App: FC = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 40,
+    paddingTop: 45,
     paddingHorizontal: 10,
     backgroundColor: '#18181b',
     alignItems: 'flex-start',
