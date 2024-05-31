@@ -1,21 +1,30 @@
-import { FC, useState } from 'react'
-import { Pressable, StyleSheet, Text, View } from 'react-native'
+import { FC, useMemo, useState } from 'react'
+import { StyleSheet, Text, View } from 'react-native'
 import { StatusBar } from 'expo-status-bar'
 
 import QuestionForm from './components/QuestionForm'
 
 import { secondary } from './utils'
-import { Question } from './models'
+import { Answer, Question } from './models'
 import { questions } from './api/questions'
 
 const App: FC = () => {
-  const [data, setData] = useState<Question[]>(questions)
+  const data: Question[] = questions
+  const [step, setStep] = useState(0)
+  const [answers, setAnswers] = useState<Answer[]>([])
+
+  const progressValue = useMemo(() => step / Number(data?.length), [data, step])
+
+  const handleNextClick = (answer: Answer): void => {
+    setAnswers(prevAnswers => [...prevAnswers, answer])
+    if (data) setStep((prevStep) => answers.length >= data.length ? data.length : prevStep + 1)
+  }
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Bhagavad Gita Quiz App</Text>
 
-      <QuestionForm question={questions[0]}/>
+      <QuestionForm question={data[step]} onNext={handleNextClick} progress={progressValue}/>
 
       <StatusBar style="auto" />
     </View>

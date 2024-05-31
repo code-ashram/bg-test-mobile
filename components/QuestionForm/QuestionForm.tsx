@@ -2,14 +2,22 @@ import { FC, useState } from 'react'
 import { Pressable, StyleSheet, Text, View } from 'react-native'
 import { Button, ProgressBar, RadioButton } from 'react-native-paper'
 import { primary, secondary } from '../../utils'
-import { Question } from '../../models'
+import { Answer, Question } from '../../models'
 
 type Props = {
   question: Question
+  onNext: (answer: Answer) => void
+  progress: number | undefined
 }
 
-const QuestionForm: FC<Props> = ({ question }) => {
+const QuestionForm: FC<Props> = ({ question, onNext, progress }) => {
   const [checked, setChecked] = useState<string>('first')
+  const [answer, setAnswer] = useState<Answer | null>(null)
+
+  const handleSubmitAnswer = () => {
+    if (answer) onNext(answer)
+    setAnswer(null)
+  }
 
   return (
     <>
@@ -17,7 +25,8 @@ const QuestionForm: FC<Props> = ({ question }) => {
         <Text style={styles.questionNumber}>
           Question №{question.id}
         </Text>
-        <ProgressBar style={styles.progressBar} progress={0.1} color={primary} />
+
+        <ProgressBar style={styles.progressBar} progress={progress} color={primary} />
       </View>
 
       <View>
@@ -33,18 +42,26 @@ const QuestionForm: FC<Props> = ({ question }) => {
         </Text>
 
         {question.options.map((option) =>
-          <Pressable key={option.id} style={styles.option} onPress={() => setChecked(String(option.id))}>
+          <Pressable key={option.id} style={styles.option} onPress={() => {
+            setChecked(String(option.id))
+            setAnswer({ answerId: option.id, questionId: question.id })
+          }}>
             <RadioButton
               color={primary}
               value={String(option.id)}
               status={checked === String(option.id) ? 'checked' : 'unchecked'}
+              onPress={() => {
+                setChecked(String(option.id))
+                setAnswer({ answerId: option.id, questionId: question.id })
+              }}
             />
+
             <Text style={styles.optionText}>{option.text}</Text>
           </Pressable>
         )}
       </View>
 
-      <Button style={styles.button} mode="contained" buttonColor={primary} onPress={() => console.log('Pressed')}>
+      <Button style={styles.button} mode="contained" buttonColor={primary} onPress={handleSubmitAnswer}>
         <Text style={styles.buttonText}>Next</Text>
       </Button>
     </>
