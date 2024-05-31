@@ -1,6 +1,6 @@
 import {Question} from "../models";
 
-const questions: Question[] = [
+export const questions: Question[] = [
     {
       id: 1,
       task: "Choose the correct answer:",
