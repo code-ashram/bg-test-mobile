@@ -3,10 +3,11 @@ import { StyleSheet, Text, View } from 'react-native'
 import { StatusBar } from 'expo-status-bar'
 
 import QuestionForm from './components/QuestionForm'
+import Result from './components/Result'
 
+import { questions } from './api/questions'
 import { secondary } from './utils'
 import { Answer, Question } from './models'
-import { questions } from './api/questions'
 
 const App: FC = () => {
   const data: Question[] = questions
@@ -24,7 +25,15 @@ const App: FC = () => {
     <View style={styles.container}>
       <Text style={styles.title}>Bhagavad Gita Quiz App</Text>
 
-      <QuestionForm question={data[step]} onNext={handleNextClick} progress={progressValue}/>
+      {
+        data && answers.length < data.length
+          ? <QuestionForm
+            question={data[step]}
+            progress={progressValue}
+            onNext={handleNextClick}
+          />
+          : data && <Result questions={data} answers={answers} />
+      }
 
       <StatusBar style="auto" />
     </View>
@@ -38,7 +47,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     backgroundColor: '#18181b',
     alignItems: 'flex-start',
-    justifyContent: 'flex-start'
+    justifyContent: 'flex-start',
+    overflow: 'scroll'
   },
   title: {
     color: 'white',
