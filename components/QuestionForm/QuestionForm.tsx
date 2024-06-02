@@ -1,13 +1,16 @@
 import { FC, useState } from 'react'
 import { Pressable, StyleSheet, Text, View } from 'react-native'
-import { Button, ProgressBar, RadioButton } from 'react-native-paper'
+import { Button, RadioButton } from 'react-native-paper'
+
+import Progress from '../Progress'
+
 import { primary, secondary } from '../../utils'
 import { Answer, Question } from '../../models'
 
 type Props = {
   question: Question
   onNext: (answer: Answer) => void
-  progress: number | undefined
+  progress: number
 }
 
 const QuestionForm: FC<Props> = ({ question, onNext, progress }) => {
@@ -26,7 +29,7 @@ const QuestionForm: FC<Props> = ({ question, onNext, progress }) => {
           Question №{question.id}
         </Text>
 
-        <ProgressBar style={styles.progressBar} progress={progress} color={primary} />
+        <Progress progress={progress} color={primary}/>
       </View>
 
       <View>
@@ -81,10 +84,11 @@ const styles = StyleSheet.create({
     borderStyle: 'solid',
     borderColor: secondary,
     borderWidth: 1,
-    borderRadius: 7
+    borderRadius: 7,
   },
   optionText: {
-    color: 'white'
+    width: '87%',
+    color: 'white',
   },
   task: {
     marginVertical: 5,
@@ -105,12 +109,6 @@ const styles = StyleSheet.create({
   progress: {
     marginTop: 7,
     width: '100%'
-  },
-  progressBar: {
-    marginTop: 5,
-    height: 10,
-    borderRadius: 7,
-    backgroundColor: secondary
   },
   button: {
     alignSelf: 'flex-end',
