@@ -1,15 +1,13 @@
-import { FC, useMemo, useState } from 'react'
-import { StyleSheet, Text, View } from 'react-native'
-import { StatusBar } from 'expo-status-bar'
+import { View, Text, StyleSheet } from 'react-native';
+import {Answer, Question} from "../../models";
+import {questions} from "../../api/questions";
+import {useMemo, useState} from "react";
+import QuestionForm from "../../components/QuestionForm";
+import Result from "../../components/Result";
+import {StatusBar} from "expo-status-bar";
+import {secondary} from "../../utils";
 
-import QuestionForm from './components/QuestionForm'
-import Result from './components/Result'
-
-import { questions } from './api/questions'
-import { secondary } from './utils'
-import { Answer, Question } from './models'
-
-const App: FC = () => {
+const Tab = () => {
   const data: Question[] = questions
   const [step, setStep] = useState(0)
   const [answers, setAnswers] = useState<Answer[]>([])
@@ -72,5 +70,4 @@ const styles = StyleSheet.create({
     borderRadius: 7
   },
 })
-
-export default App
+export default Tab
