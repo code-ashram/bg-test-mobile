@@ -5,7 +5,7 @@ import {useMemo, useState} from "react";
 import QuestionForm from "../../components/QuestionForm";
 import Result from "../../components/Result";
 import {StatusBar} from "expo-status-bar";
-import {secondary} from "../../utils";
+import { main, secondary } from '../../utils'
 
 const Tab = () => {
   const data: Question[] = questions
@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingTop: 45,
     paddingHorizontal: 10,
-    backgroundColor: '#18181b',
+    backgroundColor: main,
     alignItems: 'flex-start',
     justifyContent: 'flex-start',
     overflow: 'scroll'
